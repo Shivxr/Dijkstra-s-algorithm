@@ -8,6 +8,8 @@ graph = {
     'E': [['F', 3], ['D', 7]],    # D <-> B with cost 3, D <-> C with cost 7
     'F': [['E', 3], ['C', 4]]    # D <-> B with cost 3, D <-> C with cost 7
 }
+prev={'A':0,'B':0,'C':0,'D':0,'E':0,'F':0}
+
 st=set()
 op={'A':0,'B':float("inf"),'C':float("inf"),'D':float("inf"),'E':float("inf"),'F':float("inf")}
 
@@ -22,12 +24,21 @@ while hp:
     for i in graph[z[0]]:
         v=[i[0],i[1]+z[1]]
         if v[1]<op[v[0]]:
+            prev[v[0]]=z[0]
             op[v[0]]=v[1]
             heapq.heappush(hp,v)
     st.add(z[0])
 
 print(op)
+print(prev)
 
+a='F'#target node
+l=[]
+while a!=0:
+    l.append(a)
+    a=prev[a]
 
+op=l[::-1]
 
+print(" -> ".join(op))
 
